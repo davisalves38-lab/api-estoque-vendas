@@ -3,10 +3,10 @@ package com.davidbrito.api_estoque.service;
 import com.davidbrito.api_estoque.dto.ProdutoRequestDTO;
 import com.davidbrito.api_estoque.dto.ProdutoResponseDTO;
 import com.davidbrito.api_estoque.entity.Produto;
+import com.davidbrito.api_estoque.exception.RecursoNaoEncontradoException;
+import com.davidbrito.api_estoque.exception.RegraNegocioException;
 import com.davidbrito.api_estoque.repository.ProdutoRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -48,15 +48,23 @@ public class ProdutoService {
 
    private Produto buscarProduto(Long id){
         return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Produto não encontrado com id " + id));
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Produto não encontrado com id " + id ));
    }
 
    private void preencherDados(Produto produto, ProdutoRequestDTO dados){
+        validarPreco(dados);
+        produto.setNome(dados.nome());
+
         produto.setNome(dados.nome());
         produto.setDescricao(dados.descricao());
         produto.setPrecoCusto(dados.precoCusto());
         produto.setPrecoVenda(dados.precoVenda());
         produto.setQuantidadeEstoque(dados.quantidadeEstoque());
+   }
+
+   private void validarPreco(ProdutoRequestDTO dados){
+        if (dados.precoVenda().compareTo(dados.precoCusto()) < 0){
+            throw new RegraNegocioException("O preço de venda não pode ser menor que o preço de custo");
+        }
    }
 }

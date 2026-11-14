@@ -4,6 +4,7 @@ package com.davidbrito.api_estoque.controller;
 import com.davidbrito.api_estoque.dto.ProdutoRequestDTO;
 import com.davidbrito.api_estoque.dto.ProdutoResponseDTO;
 import com.davidbrito.api_estoque.service.ProdutoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -22,7 +23,7 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<ProdutoResponseDTO> criar(@RequestBody ProdutoRequestDTO dados,
+    public ResponseEntity<ProdutoResponseDTO> criar(@Valid @RequestBody ProdutoRequestDTO dados,
                                                     UriComponentsBuilder uriBuilder){
         ProdutoResponseDTO produto = service.criar(dados);
         URI uri = uriBuilder.path("/produtos/{id}").buildAndExpand(produto.id()).toUri();
@@ -41,7 +42,7 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProdutoResponseDTO> atualizar(@PathVariable Long id,
-                                                        @RequestBody ProdutoRequestDTO dados){
+                                                        @Valid @RequestBody ProdutoRequestDTO dados){
         return ResponseEntity.ok(service.atualizar(id, dados));
     }
 
