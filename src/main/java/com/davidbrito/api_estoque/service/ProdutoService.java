@@ -49,7 +49,7 @@ public class ProdutoService {
    private Produto buscarProduto(Long id){
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Produto não encontrado com id" + id));
+                        HttpStatus.NOT_FOUND, "Produto não encontrado com id " + id));
    }
 
    private void preencherDados(Produto produto, ProdutoRequestDTO dados){
