@@ -1,0 +1,23 @@
+# API de Estoque e Vendas
+
+API REST para controle de estoque e vendas de uma loja, desenvolvida com **Java 21**, **Spring Boot** e **MySQL**.
+
+🚧 Projeto em desenvolvimento.
+
+## Roteiro
+
+- [x] Configuração inicial do projeto e conexão com MySQL
+- [ ] CRUD de produtos
+- [ ] Validações e tratamento de erros
+- [ ] Categorias, vendas e controle de estoque
+- [ ] Autenticação com Spring Security e JWT
+- [ ] Testes automatizados com JUnit e Mockito
+- [ ] Documentação com Swagger e execução com Docker
+
+## Tecnologias
+
+- Java 21
+- Spring Boot
+- Spring Data JPA
+- MySQL
+- Maven
