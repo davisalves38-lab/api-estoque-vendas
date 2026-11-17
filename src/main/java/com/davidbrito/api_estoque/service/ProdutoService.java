@@ -6,6 +6,7 @@ import com.davidbrito.api_estoque.entity.Produto;
 import com.davidbrito.api_estoque.exception.RecursoNaoEncontradoException;
 import com.davidbrito.api_estoque.exception.RegraNegocioException;
 import com.davidbrito.api_estoque.repository.ProdutoRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class ProdutoService {
    }
 
    public List<ProdutoResponseDTO> listar(){
-        return repository.findAll()
+        return repository.findAll(Sort.by("nome"))
                 .stream()
                 .map(ProdutoResponseDTO::new)
                 .toList();
