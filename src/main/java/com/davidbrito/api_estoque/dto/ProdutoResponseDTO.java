@@ -10,7 +10,8 @@ public record ProdutoResponseDTO(
         String descricao,
         BigDecimal precoCusto,
         BigDecimal precoVenda,
-        Integer quantidadeEstoque
+        Integer quantidadeEstoque,
+        CategoriaResponseDTO categoria
 ) {
 
     public ProdutoResponseDTO (Produto produto){
@@ -20,7 +21,8 @@ public record ProdutoResponseDTO(
                 produto.getDescricao(),
                 produto.getPrecoCusto(),
                 produto.getPrecoVenda(),
-                produto.getQuantidadeEstoque()
+                produto.getQuantidadeEstoque(),
+                new CategoriaResponseDTO(produto.getCategoria())
         );
     }
 }

@@ -7,6 +7,7 @@ import com.davidbrito.api_estoque.entity.Categoria;
 import com.davidbrito.api_estoque.exception.RecursoNaoEncontradoException;
 import com.davidbrito.api_estoque.exception.RegraNegocioException;
 import com.davidbrito.api_estoque.repository.CategoriaRepository;
+import com.davidbrito.api_estoque.repository.ProdutoRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,11 @@ import java.util.List;
 public class CategoriaService {
 
     private final CategoriaRepository repository;
+    private final ProdutoRepository produtoRepository;
 
-    public CategoriaService(CategoriaRepository repository){
+    public CategoriaService(CategoriaRepository repository, ProdutoRepository produtoRepository){
         this.repository = repository;
+        this.produtoRepository = produtoRepository;
     }
 
     public CategoriaResponseDTO criar(CategoriaRequestDTO dados){
@@ -56,6 +59,9 @@ public class CategoriaService {
 
     public void excluir(Long id){
         Categoria categoria = buscarCategoria(id);
+        if (produtoRepository.existsByCategoriaId(id)){
+            throw new RegraNegocioException("Não é possível excluir uma categoria que possui produtos ");
+        }
         repository.delete(categoria);
     }
 

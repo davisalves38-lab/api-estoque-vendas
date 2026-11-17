@@ -25,6 +25,9 @@ public record ProdutoRequestDTO(
 
         @NotNull(message = "A quantidade em estoque é obrigatóriad")
         @PositiveOrZero(message = "A quantidade em estoque não pode ser negativa")
-        Integer quantidadeEstoque
+        Integer quantidadeEstoque,
+
+        @NotNull(message = "A categoria é obrigatório")
+        Long categoriaId
 ) {
 }

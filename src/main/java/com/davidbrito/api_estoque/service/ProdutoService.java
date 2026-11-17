@@ -2,9 +2,11 @@ package com.davidbrito.api_estoque.service;
 
 import com.davidbrito.api_estoque.dto.ProdutoRequestDTO;
 import com.davidbrito.api_estoque.dto.ProdutoResponseDTO;
+import com.davidbrito.api_estoque.entity.Categoria;
 import com.davidbrito.api_estoque.entity.Produto;
 import com.davidbrito.api_estoque.exception.RecursoNaoEncontradoException;
 import com.davidbrito.api_estoque.exception.RegraNegocioException;
+import com.davidbrito.api_estoque.repository.CategoriaRepository;
 import com.davidbrito.api_estoque.repository.ProdutoRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,11 @@ import java.util.List;
 @Service
 public class ProdutoService {
     private final ProdutoRepository repository;
+    private final CategoriaRepository categoriaRepository;
 
-    public ProdutoService(ProdutoRepository repository) {
+    public ProdutoService(ProdutoRepository repository, CategoriaRepository categoriaRepository) {
         this.repository = repository;
+        this.categoriaRepository = categoriaRepository;
    }
 
    public ProdutoResponseDTO criar(ProdutoRequestDTO dados){
@@ -61,6 +65,10 @@ public class ProdutoService {
         produto.setPrecoCusto(dados.precoCusto());
         produto.setPrecoVenda(dados.precoVenda());
         produto.setQuantidadeEstoque(dados.quantidadeEstoque());
+
+       Categoria categoria = categoriaRepository.findById(dados.categoriaId())
+               .orElseThrow(()-> new RecursoNaoEncontradoException("Categoria não encontrada com id " + dados.categoriaId()));
+       produto.setCategoria(categoria);
    }
 
    private void validarPreco(ProdutoRequestDTO dados){
