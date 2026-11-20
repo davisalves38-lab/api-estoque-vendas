@@ -9,7 +9,7 @@ API REST para controle de estoque e vendas de uma loja, desenvolvida com **Java 
 - [x] Configuração inicial do projeto e conexão com MySQL
 - [x] CRUD de produtos
 - [x] Validações e tratamento de erros
-- [ ] Categorias, vendas e controle de estoque
+- [x] Categorias, vendas e controle de estoque
 - [ ] Autenticação com Spring Security e JWT
 - [ ] Testes automatizados com JUnit e Mockito
 - [ ] Documentação com Swagger e execução com Docker
